@@ -13,7 +13,7 @@ Este projeto é um exemplo de aplicação utilizando **Java** e **Spring Boot**,
 O projeto segue a **Arquitetura Hexagonal**, separando as responsabilidades em camadas bem definidas:
 
 ### 1. **Camada de Domínio**
-- Contém as classes centrais do domínio, como `ModeloRequest` e `ModeloResponse`.
+- Contém as classes centrais do domínio, como `ModeloRequest` e `ModeloResponse`, `Modelo`.
 - Representa o núcleo da aplicação, independente de frameworks ou tecnologias externas.
 
 ### 2. **Camada de Casos de Uso**
@@ -23,6 +23,16 @@ O projeto segue a **Arquitetura Hexagonal**, separando as responsabilidades em c
 ### 3. **Camada de Infraestrutura**
 - Implementa as portas externas, como controladores REST (`ModeloController`) e mapeadores (`ModeloMapper`).
 - Faz a integração com frameworks e tecnologias externas.
+
+### Mappers
+Os mappers são responsáveis por converter objetos entre diferentes camadas da aplicação, garantindo que os dados sejam transformados corretamente.
+- **Exemplo**: O `ModeloMapper` converte um `ModeloRequestDTO` recebido na camada de entrega (infra/delivery) para um `ModeloRequest` utilizado na camada de domínio, e vice-versa.
+
+Essa abordagem promove a separação de responsabilidades e mantém as camadas desacopladas.
+
+- **Exemplo**: O `ModeloMapper` converte um `ModeloRequestDTO` recebido na camada de entrega (infra/delivery) para um `ModeloRequest` utilizado na camada de domínio, e vice-versa.
+
+Essa abordagem promove a separação de responsabilidades e mantém as camadas desacopladas.
 
 ## Princípios SOLID Aplicados
 ### **DIP (Dependency Inversion Principle)**
@@ -53,10 +63,16 @@ src/
 │   │   ├── br/com/sistemalima/app/
 │   │   │   ├── modelo/
 │   │   │   │   ├── core/                # Camada de domínio e casos de uso
+│   │   │   │   │   ├── domain/          # Entidades de domínio
+│   │   │   │   │   ├── usercase/        # Interfaces e implementações dos casos de uso
+│   │   │   │   │   │   ├── impl/        # Implementações dos casos de uso
+│   │   │   │   │   ├── mapper/          # Mapeadores de domínio
 │   │   │   │   ├── infra/               # Camada de infraestrutura
-│   │   │   │   │   ├── delivery/        # Controladores e mapeadores
-│   │   │   │   │   ├── persistence/     # Contém as entidades mapeadas com JPA, que podem estender ou adaptar as entidades do domínio.
+│   │   │   │   │   ├── delivery/        # Controladores e mapeadores de DTOs
+│   │   │   │   │   │   ├── mapper/      # Mapeadores para conversão entre DTOs e objetos de domínio
+│   │   │   │   │   ├── persistence/     # Persistência
+│   │   │   │   │   │   ├── entity/      # Entidades mapeadas para persistência
+│   │   │   │   │   │   ├── mapper/      # Mapeadores para conversão entre entidades de persistência e objetos de domínio
 │   │   │   │   │   │   ├── repository/  # Interfaces e implementações de repositórios
-│   │   │   │   ├── application/         # Configurações da aplicação        # Configurações da aplicação
-
+│   │   │   │   ├── application/         # Configurações da aplicação
 ````
