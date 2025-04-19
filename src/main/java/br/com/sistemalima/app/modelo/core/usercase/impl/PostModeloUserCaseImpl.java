@@ -21,10 +21,6 @@ public class PostModeloUserCaseImpl implements PostModeloUserCase {
     @Override
     public ModeloResponse execute(ModeloRequest entity) throws SummerException {
         final var modelo = modeloDomainMapper.toDomain(entity);
-        if (modelo.getId() == null) {
-            log.error("Id não pode ser nulo. ID fornecido: {}", modelo.getId());
-            throw new SummerException("Id não pode ser nulo. ID fornecido: " + modelo.getId());
-        }
         return modeloDomainMapper.toResponse(modelo);
     }
 }

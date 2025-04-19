@@ -15,4 +15,10 @@ public class Modelo {
     public static Modelo create(String nome) {
         return new Modelo(nome);
     }
+
+    public static Modelo create(Long id, String nome) {
+        Modelo modelo = new Modelo(nome);
+        modelo.id = id;
+        return modelo;
+    }
 }

@@ -15,4 +15,8 @@ public class ModeloResponse {
     public static ModeloResponse create(Modelo modelo) {
         return new ModeloResponse(modelo.getId(), modelo.getName());
     }
+
+    public static ModeloResponse create(Long id, String name) {
+        return new ModeloResponse(id, name);
+    }
 }

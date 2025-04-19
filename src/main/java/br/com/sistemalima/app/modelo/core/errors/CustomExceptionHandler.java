@@ -24,4 +24,16 @@ public class CustomExceptionHandler {
                 request.getServletPath()
         );
     }
+
+    @ExceptionHandler(SummerParseException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErroView SummerParseException(SummerParseException exception, HttpServletRequest request) {
+        return new ErroView(
+                LocalDateTime.now(),
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                HttpStatus.INTERNAL_SERVER_ERROR.name(),
+                exception.getMessage(),
+                request.getServletPath()
+        );
+    }
 }
