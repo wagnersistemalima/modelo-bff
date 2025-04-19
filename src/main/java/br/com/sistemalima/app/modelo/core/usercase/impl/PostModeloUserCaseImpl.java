@@ -1,23 +1,30 @@
 package br.com.sistemalima.app.modelo.core.usercase.impl;
 
-import br.com.sistemalima.app.modelo.core.ModeloRequest;
-import br.com.sistemalima.app.modelo.core.ModeloResponse;
+import br.com.sistemalima.app.modelo.core.domain.ModeloRequest;
+import br.com.sistemalima.app.modelo.core.domain.ModeloResponse;
 import br.com.sistemalima.app.modelo.core.errors.SummerException;
 import br.com.sistemalima.app.modelo.core.usercase.PostModeloUserCase;
-import br.com.sistemalima.app.modelo.infra.delivery.modelo.converter.ModeloConverter;
+import br.com.sistemalima.app.modelo.core.usercase.mapper.ModeloDomainMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class PostModeloUserCaseImpl implements PostModeloUserCase {
+
+    private final ModeloDomainMapper modeloDomainMapper; // Depende da abstração, não da implementação
 
     // Ainda esta devolvendo o mesmo objeto, mas o correto seria persistir no banco de dados
 
     @Override
     public ModeloResponse execute(ModeloRequest entity) throws SummerException {
-        final var modelo = ModeloConverter.toDomain(entity);
+        final var modelo = modeloDomainMapper.toDomain(entity);
         if (modelo.getId() == null) {
-            throw new SummerException("Modelo não pode ser nulo. ID fornecido: " + modelo.getId());
+            log.error("Id não pode ser nulo. ID fornecido: {}", modelo.getId());
+            throw new SummerException("Id não pode ser nulo. ID fornecido: " + modelo.getId());
         }
-        return ModeloConverter.toResponse(modelo);
+        return modeloDomainMapper.toResponse(modelo);
     }
 }

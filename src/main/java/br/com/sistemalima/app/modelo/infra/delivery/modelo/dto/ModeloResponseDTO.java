@@ -1,6 +1,6 @@
 package br.com.sistemalima.app.modelo.infra.delivery.modelo.dto;
 
-import br.com.sistemalima.app.modelo.core.ModeloResponse;
+import br.com.sistemalima.app.modelo.core.domain.ModeloResponse;
 
 public record ModeloResponseDTO(
         Long id,

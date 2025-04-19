@@ -1,4 +1,4 @@
-package br.com.sistemalima.app.modelo.core;
+package br.com.sistemalima.app.modelo.core.domain;
 
 import lombok.AccessLevel;
 import lombok.Getter;

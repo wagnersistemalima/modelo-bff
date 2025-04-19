@@ -1,6 +1,5 @@
-package br.com.sistemalima.app.modelo.core;
+package br.com.sistemalima.app.modelo.core.domain;
 
-import br.com.sistemalima.app.modelo.infra.delivery.modelo.dto.ModeloRequestDTO;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

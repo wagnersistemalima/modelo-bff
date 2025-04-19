@@ -2,7 +2,7 @@ package br.com.sistemalima.app.modelo.infra.delivery.modelo;
 
 import br.com.sistemalima.app.modelo.core.usercase.PostModeloUserCase;
 import br.com.sistemalima.app.modelo.infra.delivery.dto.BffResponse;
-import br.com.sistemalima.app.modelo.infra.delivery.modelo.converter.ModeloConverter;
+import br.com.sistemalima.app.modelo.infra.delivery.modelo.mapper.ModeloMapper;
 import br.com.sistemalima.app.modelo.infra.delivery.modelo.dto.ModeloRequestDTO;
 import br.com.sistemalima.app.modelo.infra.delivery.modelo.dto.ModeloResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -20,16 +20,17 @@ import java.net.URI;
 @RequiredArgsConstructor
 public class ModeloController {
 
-    private final PostModeloUserCase postModeloUserCase;
+    private final PostModeloUserCase postModeloUserCase; // Depende da abstração, não da implementação
+    private final ModeloMapper modeloMapper; // Depende da abstração, não da implementação
 
     @PostMapping
     public ResponseEntity<BffResponse<ModeloResponseDTO>> postModelo(@RequestBody ModeloRequestDTO modeloRequestDTO, UriComponentsBuilder uriBuilder) {
 
-        final var modeloRequest = ModeloConverter.toRequest(modeloRequestDTO);
+        final var modeloRequest = modeloMapper.toRequest(modeloRequestDTO);
 
         final var modeloResponse = postModeloUserCase.execute(modeloRequest);
 
-        final var modeloResponseDTO = ModeloConverter.toResponseDTO(modeloResponse);
+        final var modeloResponseDTO = modeloMapper.toResponseDTO(modeloResponse);
 
         URI uri = uriBuilder.path("/modelos/{id}").buildAndExpand(modeloResponse.getId()).toUri();
 
